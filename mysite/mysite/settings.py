@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landing.apps.LandingConfig',
     'users.apps.UsersConfig',
+    'upload.apps.UploadConfig',
     'crispy_forms',
 ]
 
@@ -125,8 +126,8 @@ STATIC_URL = '/static/'
 
 
 #File Uploading
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
-MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 # Default primary key field type
@@ -137,4 +138,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = "landingpage"
+LOGIN_REDIRECT_URL = "landing:landing-home"
+LOGOUT_REDIRECT_URL = "landing:landing-home"

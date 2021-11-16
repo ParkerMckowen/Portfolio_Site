@@ -20,8 +20,8 @@ def register(request):
 			# Outputting a success message
 			messages.success(request, f"Account created for {username}")
 
-			# Redirecting the user to the login page once account is created
-			# return redirect('login')
+			#Redirecting the user to the login page once account is created
+			return redirect('landing:landing-home')
 
 	# When the user is loading the page/form
 	else:

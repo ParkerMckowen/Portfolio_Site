@@ -1,0 +1,23 @@
+{% extends "landing/base.html" %}
+
+{% block content %}
+	<h2>Uploaded Files</h2>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Path</th>
+				<th>User</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for upload in uploads %}
+				<tr>
+					<td>{{ upload.id }}</td>
+					<td>{{ upload.file_name }}</td>
+					<td>{{ upload.user }}</td>
+				</tr>
+			{% endfor %}
+	</table>
+{% endblock content %}
