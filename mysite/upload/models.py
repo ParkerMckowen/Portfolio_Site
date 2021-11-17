@@ -6,6 +6,7 @@ class Upload(models.Model):
 	file_name = models.FileField(upload_to='pdfs')
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	activated = models.BooleanField(default=False)
+	text = models.TextField(null=True)
 	user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
 	def __str__(self):

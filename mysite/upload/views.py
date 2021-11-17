@@ -6,22 +6,21 @@ from django.contrib.auth.decorators import login_required
 from .forms import UploadForm
 from .models import Upload
 
-import pdfminer
-# Create your views here.
+import pdfplumber
 
-# VERY BASIC FILE UPLOAD METHOD
-# def fileUpload(request):
-# 	if request.method == 'POST':
-# 		uploaded_file = request.FILES['document']
-# 		fs = FileSystemStorage()
-# 		fs.save(uploaded_file.name, uploaded_file)
-# 	return render(request, "upload/uploadselection.html")
+def extract_pdf(file):
+	text = ""
 
+	with pdfplumber.open(file) as pdf:
+		print(pdf.metadata)
+		for page in pdf.pages:
+			extracted_text = page.extract_text()
+			cleaned_text = ' '.join(extracted_text.split())
+			text += cleaned_text
+			page.close()
+	pdf.close()
 
-# def handle_file(file):
-# 	with open(file.file_name.path, 'r') as f:
-# 		text = pdfminer.high_level.extract_text(f)
-# 		print(text)
+	return text
 
 @login_required(login_url='users:users-login')
 def upload_file(request):
@@ -30,6 +29,8 @@ def upload_file(request):
 		if form.is_valid():
 			obj = form.save(commit=False)
 			obj.user = request.user
+			filepath = obj.file_name
+			obj.text = extract_pdf(filepath)
 			obj.save()
 
 			return redirect('upload:upload-filelist')
